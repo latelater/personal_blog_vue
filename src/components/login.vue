@@ -16,6 +16,12 @@
           <el-form-item label="password: ">
             <el-input placeholder="请输入密码" v-model="user.password"></el-input>
           </el-form-item>
+          <el-row type="flex" justify="center"  >
+            <el-col :span="8">
+              <!-- <span v-model="err_message"></span> -->
+              <span v-show="show_message">{{err_message}}</span>
+            </el-col>
+          </el-row>
           <el-row type="flex" justify="center">
             <el-col :span="6">
               <el-button type="primary" native-type="submit" size="large" class="btn-my" v-on:click="postUser">login</el-button>
@@ -39,20 +45,47 @@ export default {
       user: {
         username: "",
         password: ""
-      }
+      },
+      err_message: 'null',
+      show_message: false
     };
   },
   methods: {
     postUser() {
-      alert("hello");
+      this.show_message = this.judgeUserInfo()
+      if(this.show_message === true) {
+        
+        return ;
+      }
+      axios.defaults.baseURL = BASE_URL;
+      axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+      axios.post('/user/login', {
+        username: this.user.username,
+        password: this.user.password
+      }).then(function(response) {
+        console.log(response);
+        if(response.status === 200) {
+          if(response.data.code === 200) {
+            data = response.data
+          } else {        
+            // this.err_message = response.data.
+          }
+        }
+      }).catch(function(err) {
+        // alert(err);
+        this.show_message = true;
+        this.err_message = "服務端錯誤";
+      })
     },
     judgeUserInfo() {
       if(this.user.username === "") {
-        console.log("用户名为空");
-        return false;
-      } else if(this.user,password === ""){
-        console.log("用户名为空");        
+        this.err_message = "用户名不能为空";
+        return true;
+      } else if(this.user.password === "") {
+        this.err_message = "密码不能为空";
+        return true;      
       }
+      return false;
     }
   },
   components: {
@@ -62,11 +95,16 @@ export default {
 </script>
   
 <style>
+  #Test {
+    /* background-color: #f9fafc;  */
+    margin-top: 10%;
+  }  
   .el-row {
     margin-bottom: 20px;
   }
   .el-col {
     border-radius: 4px;
+    background-color: white;
   }
   .bg-purple-dark {
     background: #99a9bf;
@@ -87,5 +125,9 @@ export default {
   }
   .btn-my {
     padding: 10% 60%;
+  }
+  .err-message {
+    text-align: center;
+    font-size: 14px;
   }
 </style>

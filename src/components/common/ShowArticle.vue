@@ -2,11 +2,11 @@
   <div id="Article">
     <el-row>
       <el-col 
-      :span="12" :offset="3" class="row-bg"
+      :span="24" class="row-bg"
       :class="{'grid-content': isShow}"
-      :mouseover="showBorder()" 
-      :mousemove="hideBoder()"
-      :mouseup="pageRedirect()">
+      v-on:mouseover.native="showBorder()" 
+      v-on:mouseout.native="hideBoder()"
+      v-on:mouseup.native="pageRedirect()">
         <h2>我是titile</h2>
         <el-tag type="gray">作者：zhangchi</el-tag>
         <p>2017-08-15 13:00</p>
@@ -22,7 +22,20 @@
 
 <script>
   export default {
-    name: "Article",
+    props: {
+      articleData: {
+        type: Object,
+        require: true,
+        default : function () {
+          return {
+            title: "我是title",
+            author: "zhangchi",
+            date: "2017-08-15 13:00",
+            content: ""
+          }
+        }
+      }
+    },
     data() {
       return {
         isShow: false
@@ -31,14 +44,12 @@
     methods: {
       showBorder() {
         this.isShow = true;
-        console.log("this.isShow = true;");
       },
       hideBoder() {
-        console.log("this.isShow = false;");
         this.isShow = false;
       },
       pageRedirect() {
-        console.log("pageRedirect")
+        console.log(this.articleData)
       }
     },
     components: {}
@@ -63,12 +74,4 @@
     padding: 10px 40px;
     background-color: #f9fafc;
   }
-  .boder-big:{
-		border-width: 1px;
-		border-style: outset;
-		border-radius: 4px;
-		/* border-color: #efefef;  */
-		box-shadow:2px 2px 3px #aaaaaa;
-  }
 </style>
-

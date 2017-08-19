@@ -9,7 +9,13 @@
         </el-carousel> 
       </el-row>
 
-      <el-row></el-row>
+      <el-row :gutter="20">
+        <el-col :span="12" :offset="2">
+          <show-article v-bind:articleData="articleData"></show-article>      
+        </el-col>
+        <el-col :span="8">
+        </el-col>
+      </el-row>
       <el-row></el-row>
     </el-row>
     
@@ -18,11 +24,18 @@
 
 <script>
 import axios from 'axios';
+import showArticle from './common/ShowArticle'
 
 export default {
   name: 'HomePage',
   data() {
     return {
+      articleData: {
+        title: "我是title123",
+        author: "zhangchi123",
+        date: "2017-08-15 13:00",
+        content: "有content"
+      },
       articles: ["第一篇", "第二篇", "第三篇", "第四篇"]
     }
   },
@@ -37,6 +50,9 @@ export default {
       })
     }
   },
+  components: {
+    "show-article": showArticle
+  }
 }
 </script>
 

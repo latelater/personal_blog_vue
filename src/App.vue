@@ -20,4 +20,7 @@ export default {
    /* margin-top: 60px;  */
   /* background-color: #efefef;  */
 }
+.pointer{
+   cursor:pointer;
+}
 </style>

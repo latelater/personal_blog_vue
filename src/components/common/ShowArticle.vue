@@ -9,7 +9,7 @@
       v-on:mouseup.native="pageRedirect()">
         <h2>{{articleData.title}}</h2>
         <el-tag type="gray">{{articleData.author}}</el-tag>
-        <p>{{articleData.article_date}}</p>
+        <p class="date_style">{{articleData.article_date}}</p>
         <p>{{articleData.content}}</p>
       </el-col>
     </el-row>
@@ -70,5 +70,11 @@
   .row-bg {
     padding: 10px 40px;
     background-color: #f9fafc;
+    line-height: 32px;
+    font-size: smaller;
+  }
+  .date_style {
+    font-style: italic;    
+    font-size: x-small; 
   }
 </style>

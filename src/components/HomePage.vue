@@ -11,7 +11,7 @@
 
       <el-row :gutter="20">
         <el-col :span="12" :offset="2" v-for="(article, index) in getArticles" :key="article">
-          <show-article  v-if="index < 2" v-bind:articleData="article"></show-article>      
+          <show-article  v-if="index < 10" v-bind:articleData="article"></show-article>      
         </el-col>
         <el-col :span="8">
         </el-col>

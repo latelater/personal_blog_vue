@@ -24,7 +24,7 @@
           </el-row>
           <el-row type="flex" justify="center">
             <el-col :span="6">
-              <el-button type="primary" native-type="submit" size="large" class="btn-my" v-on:click="getDate">login</el-button>
+              <el-button type="primary" native-type="submit" size="large" class="btn-my" v-on:click="postUser">login</el-button>
             </el-col>
           </el-row>
         </el-form>
@@ -79,60 +79,6 @@ export default {
         this.show_message = true;
         // this.err_message = "服務端錯誤";
       })
-    },
-
-
-      getDate() {
-        console.log(this.user)
-        // let name = document.getElementsByName('username')[0].value;
-        // let password = document.getElementsByName('password')[0].value;
-        let name = this.user.username;
-        let password = this.user.password;
-        return new Promise(function(resolve, reject) {
-          console.log(name)
-          let req = new XMLHttpRequest();
-                    // OPEN
-          req.open('POST', BASE_URL+'user/login');
-          // req.open('POST', '/user/create_user');
-          // 设置请求头部信息
-          req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-          // 指定服务端返回的数据类型
-          req.responseType = 'json';
-          req.send('username=' + name + '&password=' + password);                    
-          
-                    
-          // 添加监听事件
-          req.onload = function (e) {
-            if (this.status === 200) {
-            // 获取服务端返回的数据this.response
-              console.log("this.response chenggong");
-              if (this.response.code === 200) {
-                alert("this.response chenggong");
-                //重定向
-                // window.location.href='index.html';
-                let data = this.response.data;
-                resolve(data);                               
-                // console.log(data);
-              } else {
-                alert("cuo wu");
-                reject("cuo wu");
-              }
-            } else {
-              alert('网络错误');
-              reject("网络错误");
-                            
-            }
-          }
-        })            
-      },
-
-
-    clickBtn () {
-      this.getDate().then(function(data) {
-        console.log(data, "***************");
-          }, function(err) {
-            console.log(this.show_message, "##################");
-      });
     },
     judgeUserInfo() {
       if(this.user.username === "") {

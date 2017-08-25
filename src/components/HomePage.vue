@@ -1,7 +1,7 @@
 <template>
   <div id="HomePage">
     <el-row>
-       <el-row>
+      <el-row>
         <el-carousel indicator-position="outside">
           <el-carousel-item v-for="item in articles" :key="item">
             <h3 class="pointer">{{ item }}</h3>
@@ -10,11 +10,21 @@
       </el-row>
 
       <el-row :gutter="20">
-        <el-col :span="12" :offset="2" v-for="(article, index) in getArticles" :key="article">
-          <show-article  v-if="index < 10" v-bind:articleData="article"></show-article>      
-        </el-col>
-        <el-col :span="8">
-        </el-col>
+        <el-row>
+          <el-col :span="12" :offset="2" v-for="(article, index) in getArticles" :key="article">
+            <show-article  v-if="index < 10" v-bind:articleData="article"></show-article>      
+          </el-col>
+          <el-col :span="8">
+          </el-col>
+        </el-row>
+        <el-row class="end-line">
+          <el-col :span="8" :offset="6">
+            <el-button-group>
+              <el-button type="primary" icon="arrow-left">上一页</el-button>
+              <el-button type="primary">下一页<i class="el-icon-arrow-right el-icon--right"></i></el-button>
+            </el-button-group>
+          </el-col>
+        </el-row>
       </el-row>
       <el-row></el-row>
     </el-row>
@@ -105,5 +115,11 @@ export default {
 
   h3 {
     text-align: center;
+  }
+  .end-line {
+    border-top: 1px #e0e0e0 solid;
+    padding-top: 10px;
+    margin-top: 15px;
+    text-align: right !important;
   }
 </style>

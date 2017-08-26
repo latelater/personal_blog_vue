@@ -1,19 +1,24 @@
 class parseData {
     constructor(data) {
-        this.data = '';
-        if(data.username) {
-            this.data = this.parseUser();
-        } else if(data.title) {
-            this.data = this.parseArticles();
-        } else if(data....)
+        this.data = data;
+        this.parse_data = {};
+        if(this.data.username) {
+            this.parse_data = this.parseUser();
+        } else if(this.data.title) {
+            this.parse_data = this.parseArticles();
+        } else if(this.data.category_name) {
+            this.parse_data = this.parseCategory();
+        }
     }
 
     parseUser() {
-        
+        this.username = this.data.username;
+        this.nickname = this.data.nick_name;
+        this.introduce = this.data.introduce;
     }
 
     parseArticles() {
-
+        
     }
 
     parseFenLei() {

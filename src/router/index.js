@@ -4,6 +4,8 @@ import Hello from '@/components/Hello'
 import Test from '@/components/login';
 import HomePage from '@/components/HomePage';
 import Article from '@/components/common/ShowArticle';
+import Category from '@/components/common/ShowCategory';
+
 
 Vue.use(Router)
 
@@ -28,6 +30,11 @@ export default new Router({
       path: '/ShowArticle',
       name: 'Article',
       component: Article
+    },
+    {
+      path:'/ShowCategory',
+      name: 'Category',
+      component: Category
     }
   ]
 })

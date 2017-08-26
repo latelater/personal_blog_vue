@@ -9,15 +9,16 @@
         </el-carousel> 
       </el-row>
 
-      <el-row :gutter="20">
+      <el-row>
         <el-row>
           <el-col :span="12" :offset="2" v-for="(article, index) in getArticles" :key="article">
             <show-article  v-if="index < 10" v-bind:articleData="article"></show-article>      
           </el-col>
-          <el-col :span="8">
+          <el-col :span="8" :offset="2">
+            <show-category></show-category>
           </el-col>
         </el-row>
-        <el-row class="end-line">
+        <el-row>
           <el-col :span="8" :offset="6">
             <el-button-group>
               <el-button type="primary" icon="arrow-left">上一页</el-button>
@@ -26,7 +27,7 @@
           </el-col>
         </el-row>
       </el-row>
-      <el-row></el-row>
+      <el-row  class="end-line"></el-row>
     </el-row>
     
   </div>
@@ -35,6 +36,7 @@
 <script>
 import axios from 'axios';
 import showArticle from './common/ShowArticle'
+import showCategory from './common/ShowCategory'
 
 export default {
   name: 'HomePage',
@@ -84,7 +86,8 @@ export default {
     },
   },
   components: {
-    "show-article": showArticle
+    "show-article": showArticle,
+    "show-category": showCategory
   }
 }
 </script>

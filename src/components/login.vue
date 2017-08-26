@@ -53,10 +53,10 @@ export default {
   methods: {
     postUser() {
       this.show_message = this.judgeUserInfo()
-      if(this.show_message === true) {
+      // if(this.show_message === true) {
         
-        return ;
-      }
+      //   return ;
+      // }
       axios.defaults.baseURL = BASE_URL;
       axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
       axios.post('/user/login', {
@@ -65,16 +65,19 @@ export default {
       }).then(function(response) {
         console.log(response);
         if(response.status === 200) {
+          console.log(response.data)
           if(response.data.code === 200) {
             data = response.data
           } else {        
             // this.err_message = response.data.
+            console.log("shibai")
           }
         }
       }).catch(function(err) {
         // alert(err);
+        console.log(err)
         this.show_message = true;
-        this.err_message = "服務端錯誤";
+        // this.err_message = "服務端錯誤";
       })
     },
     judgeUserInfo() {

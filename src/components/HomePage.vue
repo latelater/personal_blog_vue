@@ -1,20 +1,30 @@
 <template>
   <div id="HomePage">
     <el-row>
-       <el-row>
+      <el-row>
         <el-carousel indicator-position="outside">
           <el-carousel-item v-for="item in articles" :key="item">
-            <h3>{{ item }}</h3>
+            <h3 class="pointer">{{ item }}</h3>
           </el-carousel-item>
         </el-carousel> 
       </el-row>
 
       <el-row :gutter="20">
-        <el-col :span="12" :offset="2">
-          <show-article v-bind:articleData="articleData"></show-article>      
-        </el-col>
-        <el-col :span="8">
-        </el-col>
+        <el-row>
+          <el-col :span="12" :offset="2" v-for="(article, index) in getArticles" :key="article">
+            <show-article  v-if="index < 10" v-bind:articleData="article"></show-article>      
+          </el-col>
+          <el-col :span="8">
+          </el-col>
+        </el-row>
+        <el-row class="end-line">
+          <el-col :span="8" :offset="6">
+            <el-button-group>
+              <el-button type="primary" icon="arrow-left">上一页</el-button>
+              <el-button type="primary">下一页<i class="el-icon-arrow-right el-icon--right"></i></el-button>
+            </el-button-group>
+          </el-col>
+        </el-row>
       </el-row>
       <el-row></el-row>
     </el-row>
@@ -28,6 +38,25 @@ import showArticle from './common/ShowArticle'
 
 export default {
   name: 'HomePage',
+  created() {
+    axios.defaults.baseURL = BASE_URL;
+    axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+    axios.get('/articles/articleList').then((response) => {
+      if(response.status == 200) {
+        if(response.data.code == 200) {
+          this.getArticles = response.data.data;
+          this.len = this.getArticles.length;
+          console.log(this.getArticles)
+          console.log(this.len);
+        } else {
+          console.log(response.data.code, response.data.message);          
+        }
+      }
+    }).catch(function(err) {
+      console.log(err);
+      // return err;
+    })
+  },
   data() {
     return {
       articleData: {
@@ -36,7 +65,9 @@ export default {
         date: "2017-08-15 13:00",
         content: "有content"
       },
-      articles: ["第一篇", "第二篇", "第三篇", "第四篇"]
+      articles: ["第一篇", "第二篇", "第三篇", "第四篇"],
+      getArticles: {},
+      len: 0
     }
   },
   methods: {
@@ -45,10 +76,12 @@ export default {
       axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
       axios.get('/articles/articleList').then(function(response) {
         console.log(response);
+        return response;
       }).catch(function(err) {
         console.log(err);
+        return err;
       })
-    }
+    },
   },
   components: {
     "show-article": showArticle
@@ -82,5 +115,11 @@ export default {
 
   h3 {
     text-align: center;
+  }
+  .end-line {
+    border-top: 1px #e0e0e0 solid;
+    padding-top: 10px;
+    margin-top: 15px;
+    text-align: right !important;
   }
 </style>

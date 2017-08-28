@@ -62,10 +62,10 @@
   .grid-content {
     min-height: 36px;
 		border-width: 1px;
-		border-style: outset;
+		border-style: inherit;
 		border-radius: 4px;
-		/* border-color: #efefef;  */
-		box-shadow:2px 2px 3px #aaaaaa;
+    border-color: #9EE0F8;
+    box-shadow: #C0EBFB 0px 0px 20px 0px;
   }
   .row-bg {
     padding: 10px 40px;

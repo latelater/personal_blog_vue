@@ -2,7 +2,11 @@
   <div id="Category">
     <el-row>
         <el-col :span="12">
-            <el-tree :data="data" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
+            <el-tree 
+            :data="customDate" 
+            :props="defaultProps" 
+            highlight-current=true 
+            @node-click="handleNodeClick"></el-tree>
         </el-col>
     </el-row>
   </div>
@@ -11,26 +15,27 @@
 <script>
   export default {
     name: 'Category',
+    props: {
+      customDate: {
+        type: Array,
+        require: true
+      }
+    },
     data() {
       return {
-        data: [{
-          label: '一级 1',
-          children: [{ 
-            label: '二级 1-1',
-            children: [{
-              label: '三级 1-1-1'
-            }]
-          }]
-        }],
         defaultProps: {
           children: 'children',
-          label: 'label'
+          label: 'label',
+          isLast: true
         }
       };
     },
     methods: {
-      handleNodeClick(data) {
+      handleNodeClick(data, node, com) {
         console.log(data);
+        if(data.isLast == true) {
+          console.log("I zhixing le");
+        }
       }
     }
   };

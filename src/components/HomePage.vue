@@ -11,11 +11,14 @@
 
       <el-row>
         <el-row>
-          <el-col :span="12" :offset="2" v-for="(article, index) in getArticles" :key="article">
-            <show-article  v-if="index < 10" v-bind:articleData="article"></show-article>      
+          <el-col :span="12" :offset="2">
+            <div v-for="(article, index) in getArticles" :key="article">
+              <show-article  v-if="index < 10" v-bind:articleData="article"></show-article>    
+            </div>
           </el-col>
           <el-col :span="8" :offset="2">
-            <show-category></show-category>
+            <show-category v-bind:customDate="custom_categories"></show-category>
+            <show-category v-bind:customDate="date_categories"></show-category>            
           </el-col>
         </el-row>
         <el-row>
@@ -35,8 +38,8 @@
 
 <script>
 import axios from 'axios';
-import showArticle from './common/ShowArticle'
-import showCategory from './common/ShowCategory'
+import showArticle from './common/ShowArticle';
+import showCategory from './common/ShowCategory';
 
 export default {
   name: 'HomePage',
@@ -46,10 +49,8 @@ export default {
     axios.get('/articles/articleList').then((response) => {
       if(response.status == 200) {
         if(response.data.code == 200) {
-          this.getArticles = response.data.data;
+          this.getArticles = response.data.data; //监听函数，监听到变量改变即拿十条数据
           this.len = this.getArticles.length;
-          console.log(this.getArticles)
-          console.log(this.len);
         } else {
           console.log(response.data.code, response.data.message);          
         }
@@ -57,33 +58,46 @@ export default {
     }).catch(function(err) {
       console.log(err);
       // return err;
-    })
+    });
+
+
   },
   data() {
     return {
-      articleData: {
-        title: "我是title123",
-        author: "zhangchi123",
-        date: "2017-08-15 13:00",
-        content: "有content"
-      },
       articles: ["第一篇", "第二篇", "第三篇", "第四篇"],
       getArticles: {},
-      len: 0
+      len: 0,
+      custom_categories: [{
+        label: 'Custom Categories',
+        children: [{ 
+          label: 'JavaScript',
+          children: [{
+            label: '读书笔记',
+            isLast: true
+          },{
+            label: '博客名称',
+            isLast: true
+          }],
+          isLast: false
+        }],
+        isLast: false
+      }],
+      date_categories: [{
+        label: 'Date Categories',
+        children: [{
+          label: '2107年',
+          children: [{
+            label: '3月',
+            children: [{
+              label: '读书笔记'
+            }]
+          }]
+        }]
+      }]
     }
   },
   methods: {
-    getAticlesList () {
-      axios.defaults.baseURL = BASE_URL;
-      axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-      axios.get('/articles/articleList').then(function(response) {
-        console.log(response);
-        return response;
-      }).catch(function(err) {
-        console.log(err);
-        return err;
-      })
-    },
+
   },
   components: {
     "show-article": showArticle,

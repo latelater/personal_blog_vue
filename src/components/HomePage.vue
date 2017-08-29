@@ -13,7 +13,7 @@
         <el-row>
           <el-col :span="12" :offset="2">
             <div v-for="(article, index) in getArticles" :key="article">
-              <show-article  v-if="index < 10" v-bind:articleData="article"></show-article>    
+              <show-article  v-if="index < 20" v-bind:articleData="article"></show-article>    
             </div>
           </el-col>
           <el-col :span="8" :offset="2">
@@ -89,7 +89,7 @@ export default {
           children: [{
             label: '3月',
             children: [{
-              label: '读书笔记'
+              label: ''
             }]
           }]
         }]

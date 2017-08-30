@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- <link href="css/style.css" rel="stylesheet"> -->
+    </head>
+    <body>
+    <div>
+        <span>lalalaallalala</span>
+    </div>
+     <script type="text/javascript">
+        let arr = [72, 6, 57, 88, 60, 42, 83, 73, 48, 85];
+        console.log("***************");
+        function swap(arr, i, j) { 
+            let temp = 0;
+            temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+            return arr;
+        }
+        function Sort(arr, left, right) {
+            let s = arr[left];
+            let i = left;
+            let j = right;
+            while(i < j) {
+                
+                while(arr[j] >= s) {
+                    j --;
+                }
+
+                while(arr[i] <= s) {
+                    i ++;
+                }
+
+                if(i < j) { // 最后一步 i j 不交换
+                    arr = swap(arr, i, j);
+                }
+            }
+
+            console.log(arr, j);
+
+            arr = swap(arr, left, j);
+            console.log(arr);
+
+        }
+        Sort(arr, 0, 9);
+
+    </script> 
+    </body>
+
+</html>

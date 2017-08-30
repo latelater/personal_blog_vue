@@ -135,7 +135,6 @@ export default {
       } 
       // if()
       this.custom_categories = customShow;
-      console.log(customShow, "******************");
     }
   },
   components: {

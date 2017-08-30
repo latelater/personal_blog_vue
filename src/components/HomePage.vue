@@ -60,6 +60,20 @@ export default {
       // return err;
     });
 
+    axios.get('/category/categoryArticles').then(response => {
+      if(response.status == 200) {
+        if(response.data.code == 200) {
+          this.category_articles = response.data.data;
+          console.log(this.category_articles);
+          this.showCategoryFunc();
+        } else {
+          console.log(response.data.code, response.data.message);
+        }
+      } else {
+        console.log("出错啦");
+      }
+    })
+
 
   },
   data() {
@@ -67,15 +81,27 @@ export default {
       articles: ["第一篇", "第二篇", "第三篇", "第四篇"],
       getArticles: {},
       len: 0,
+      category_articles: {},
       custom_categories: [{
         label: 'Custom Categories',
         children: [{ 
-          label: 'JavaScript',
+          label: '分类1',
           children: [{
-            label: '读书笔记',
+            label: '读书笔记1',
             isLast: true
           },{
-            label: '博客名称',
+            label: '博客名称2',
+            isLast: true
+          }],
+          isLast: false
+        },
+        { 
+          label: '分类2',
+          children: [{
+            label: '读书笔记1',
+            isLast: true
+          },{
+            label: '博客名称2',
             isLast: true
           }],
           isLast: false
@@ -97,7 +123,20 @@ export default {
     }
   },
   methods: {
-
+    showCategoryFunc() {
+      let customShow = [{label:"Custom Categories", children: []}];
+      for(let key in this.category_articles.custom) {
+        let child1 = {label: key, children: [], isLast:false};
+        for(let i = 0; i < this.category_articles.custom[key].length; i++) {
+          let child2 = {label: this.category_articles.custom[key][i], isLast:true};
+          child1.children.push(child2);         
+        }             
+        customShow[0].children.push(child1);
+      } 
+      // if()
+      this.custom_categories = customShow;
+      console.log(customShow, "******************");
+    }
   },
   components: {
     "show-article": showArticle,

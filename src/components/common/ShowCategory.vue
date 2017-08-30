@@ -5,7 +5,6 @@
             <el-tree 
             :data="customDate" 
             :props="defaultProps" 
-            highlight-current=true 
             @node-click="handleNodeClick"></el-tree>
         </el-col>
     </el-row>
@@ -32,7 +31,9 @@
     },
     methods: {
       handleNodeClick(data, node, com) {
-        console.log(data);
+        // console.log(data);
+        // accordion=true 
+        //     highlight-current=true 
         if(data.isLast == true) {
           console.log("I zhixing le");
         }

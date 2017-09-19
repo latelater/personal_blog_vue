@@ -16,44 +16,68 @@
      <script type="text/javascript">
 
         let str = `奴隶社会,非洲,古埃及文明,金字塔
-        ,亚洲,两河流域文明,汉谟拉比法典
-        ,,古印度,种姓制度
-        ,,,佛教的创立
-        ,欧洲,希腊,希腊城邦
-        ,,,雅典民主
-        ,,罗马,城邦
-        ,,,帝国的征服与扩展
-        ,,希腊罗马古典文化,建筑艺术
-        ,,,公历`
+,亚洲,两河流域文明,汉谟拉比法典
+,,古印度,种姓制度
+,,,佛教的创立
+,欧洲,希腊,希腊城邦
+,,,雅典民主
+,,罗马,城邦
+,,,帝国的征服与扩展
+,,希腊罗马古典文化,建筑艺术
+,,,公历`
 
         let count1 = 0;
         let arr = str.split('\n');
-        let arr1 = [];
-        for(let i = 0; i < arr.length; i++) {
-            arr1.push(arr[i].split(','));
-        }
+        arr = arr.map((item) => {
+            return item.split(',');
+        })
 
         let json = {
-            [arr1[0][0]] :[]
+            [arr[0][0]] :[]
         }
-        for(let i = 0; i < arr1.length; i++) {
-            // if(i != 0) {
-            //     arr1[i][0] = '';
-            // }
-            if(arr1[i][1] != '') {
-                let temp = {
-                    [arr1[i][1]]: []
+        let arr1 = [];
+        for(let i = 0; i < arr.length; i++) {
+            arr1[i] = [];
+            for(let j = arr[i].length-1; j >= 0; j--) {
+                if(j == arr[i].length-1) {
+                    let temp = [{
+                        [arr[i][j]]: []
+                    }]
+                    arr[i][j] = temp;
+                } else if(arr[i][j] != '') {
+                    let temp = [{
+                        [arr[i][j]]: arr[i][j+1]
+                    }]
+                    if(j == 0) {
+                        temp = [{
+                            [arr[i][j]]: arr[i][j+1]
+                        }] 
+                    }
+                    arr[i][j] = temp;
                 }
-                for(let j in json) {
-                    json[j].push(temp);
+            }
+
+        }
+        // console.log(arr);
+        for(let i = arr.length - 1; i >= 0; i --) { // 倒着遍历arr
+            for(let j = 0; j < arr[i].length; j++) { 
+                if(arr[i][j] != '') {// 找到第一个不为空的元素
+                    for(let k = i-1; k >= 0; k --) {
+                        if(arr[k][j-1] && arr[k][j-1] != '') { // 找到他的上一个并且把他加进去
+                            for(let x in arr[k][j-1][0]) {
+                                // console.log(x)
+                               arr[k][j-1][0][x].push(arr[i][j][0]);
+                            }
+                            break;// 找到他的上一级就停止
+                        }
+                    }
+                    break; // 找到第一个不为空的就结束，后面的元素没用
                 }
             }
         }
-
-        // for(let i = 0; i)
-        console.log(json);
-
-
+        let result = arr[0][0][0];
+        console.log(result);
+        
 
     </script> 
     </body>

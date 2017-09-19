@@ -8,6 +8,7 @@
 
 <div id="app">
      <p>{{ message }}</p>
+     <input type="text" v-model="message">
 </div>
 
 <script type="text/javascript">
@@ -19,7 +20,8 @@
       },
        beforeCreate: function () {
                 console.group('beforeCreate 创建前状态===============》');
-               console.log("%c%s", "color:red" , "el     : " + this.$el); //undefined
+               console.log("%c%s", "color:red" , "el     : " + this.$el); //undefined el vueg根元素
+               console.log(window.document); //已存在
                console.log("%c%s", "color:red","data   : " + this.$data); //undefined 
                console.log("%c%s", "color:red","message: " + this.message);  
         },

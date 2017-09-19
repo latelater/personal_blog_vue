@@ -15,7 +15,7 @@
     </div>
      <script type="text/javascript">
 
-        let str = `奴隶社会,非洲,古埃及文明,金字塔
+        let str = `奴隶社会,非洲,古埃及文明,金字塔,111
 ,亚洲,两河流域文明,汉谟拉比法典
 ,,古印度,种姓制度
 ,,,佛教的创立
@@ -24,20 +24,19 @@
 ,,罗马,城邦
 ,,,帝国的征服与扩展
 ,,希腊罗马古典文化,建筑艺术
-,,,公历`
+,,,公历
+,,,,222
+,,,,,222
+,222`
 
         let count1 = 0;
+        //将字符串按照\n和,进行切割并存储
         let arr = str.split('\n');
         arr = arr.map((item) => {
             return item.split(',');
         })
-
-        let json = {
-            [arr[0][0]] :[]
-        }
-        let arr1 = [];
+        //第i行j列个元素保留了第i行j列之前个元素的结果，最终第i个数组的第一个不为空的元素保留了第i个数组拼接的一个结果
         for(let i = 0; i < arr.length; i++) {
-            arr1[i] = [];
             for(let j = arr[i].length-1; j >= 0; j--) {
                 if(j == arr[i].length-1) {
                     let temp = [{
@@ -54,31 +53,91 @@
                         }] 
                     }
                     arr[i][j] = temp;
+                } else {
+                    // 在数组的最后加入第一个不为空的元素的位置
+                    let len = arr[i].length;
+                    arr[i][len] = j+1;
+                    break;
                 }
             }
-
         }
-        // console.log(arr);
-        for(let i = arr.length - 1; i >= 0; i --) { // 倒着遍历arr
-            for(let j = 0; j < arr[i].length; j++) { 
-                if(arr[i][j] != '') {// 找到第一个不为空的元素
-                    for(let k = i-1; k >= 0; k --) {
-                        if(arr[k][j-1] && arr[k][j-1] != '') { // 找到他的上一个并且把他加进去
-                            for(let x in arr[k][j-1][0]) {
-                                // console.log(x)
-                               arr[k][j-1][0][x].push(arr[i][j][0]);
-                            }
-                            break;// 找到他的上一级就停止
-                        }
+        console.log(arr)
+        for(let i = arr.length - 1; i >= 1; i --) { // 倒着遍历arr，第0个不需要遍历
+            let len = arr[i].length-1;
+            let j = arr[i][len];
+            for(let k = i-1; k >= 0; k --) {
+                if(arr[k][j-1] && arr[k][j-1] != '') { // 找到他的上一个并且把他加进去
+                    for(let x in arr[k][j-1][0]) {
+                       arr[k][j-1][0][x].push(arr[i][j][0]);
                     }
-                    break; // 找到第一个不为空的就结束，后面的元素没用
+                    break;// 找到他的上一级就停止
+                }
+            }
+        }
+        let result = arr[0][0][0];
+    
+//     let str = `奴隶社会,非洲,古埃及文明,金字塔,111
+// ,亚洲,两河流域文明,汉谟拉比法典
+// ,,古印度,种姓制度
+// ,,,佛教的创立
+// ,欧洲,希腊,希腊城邦
+// ,,,雅典民主
+// ,,罗马,城邦
+// ,,,帝国的征服与扩展
+// ,,希腊罗马古典文化,建筑艺术
+// ,,,公历
+// ,,,,222
+// ,,,,,222
+// ,222`
+    function str2json(str) {
+        //将字符串按照\n和,进行切割并存储
+        let arr = str.split('\n');
+        arr = arr.map((item) => {
+            return item.split(',');
+        })
+        //第i行j列个元素保留了第i行j列之前个元素的结果，最终第i个数组的第一个不为空的元素保留了第i个数组拼接的一个结果
+        for(let i = 0; i < arr.length; i++) {
+            for(let j = arr[i].length-1; j >= 0; j--) {
+                if(j == arr[i].length-1) {
+                    let temp = [{
+                        [arr[i][j]]: []
+                    }]
+                    arr[i][j] = temp;
+                } else if(arr[i][j] != '') {
+                    let temp = [{
+                        [arr[i][j]]: arr[i][j+1]
+                    }]
+                    if(j == 0) {
+                        temp = [{
+                            [arr[i][j]]: arr[i][j+1]
+                        }] 
+                    }
+                    arr[i][j] = temp;
+                } else {
+                    // 在数组的最后加入第一个不为空的元素的位置
+                    let len = arr[i].length;
+                    arr[i][len] = j+1;
+                    break;
+                }
+            }
+        }
+        console.log(arr)
+        for(let i = arr.length - 1; i >= 1; i --) { // 倒着遍历arr，第0个不需要遍历
+            let len = arr[i].length-1;
+            let j = arr[i][len];
+            for(let k = i-1; k >= 0; k --) {
+                if(arr[k][j-1] && arr[k][j-1] != '') { // 找到他的上一个并且把他加进去
+                    for(let x in arr[k][j-1][0]) {
+                       arr[k][j-1][0][x].push(arr[i][j][0]);
+                    }
+                    break;// 找到他的上一级就停止
                 }
             }
         }
         let result = arr[0][0][0];
         console.log(result);
-        
-
+        return result;
+    }
     </script> 
     </body>
 </html>
